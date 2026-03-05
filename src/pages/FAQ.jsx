@@ -8,23 +8,15 @@ const faqs = [
   },
   {
     question: "Do I need prior cloud experience to join?",
-    answer: "Absolutely not! We welcome students of all skill levels, from complete beginners to advanced practitioners. Our workshops and study groups are designed to help you start from scratch and build your way up."
+    answer: "No. Beginners are welcome. The club organizes beginner-friendly sessions that start from the basics of cloud computing and gradually move toward advanced topics."
   },
   {
     question: "How can I become a member?",
     answer: "You can officially register during our recruitment drives at the beginning of the semester. However, most of our general meetups, online discussions, and basic workshops are open to all students year-round."
   },
   {
-    question: "Are there any membership fees?",
-    answer: "No, joining the community and attending most of our standard training sessions are completely free. Sometimes we might host special events or hackathons that may have a minimal registration fee to cover logistics."
-  },
-  {
     question: "How can this help my career?",
     answer: "Cloud computing is one of the most in-demand skills in the tech industry today. By joining, you'll gain practical experience, prepare for industry-recognized AWS Certifications, build resume-worthy projects, and network with professionals who can help land internships and jobs."
-  },
-  {
-    question: "Can non-CS/IT students join?",
-    answer: "Yes! Cloud technology is applicable across many domains. Whether you're in electronics, mechanical, or business, if you have an interest in technology and want to learn, you are welcome here."
   }
 ];
 
