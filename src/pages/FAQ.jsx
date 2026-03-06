@@ -3,9 +3,9 @@ import FAQAccordion from "../components/FAQAccordion";
 
 const faqs = [
   {
-    question: "What is the AWS Community I2IT?",
+    question: "Who can join the community?",
     answer:
-      "We are a student-led technical community focused on cloud computing, specifically Amazon Web Services. Our goal is to spread awareness, provide hands-on experience, and build a strong network of cloud enthusiasts at our college.",
+      "The AWS Community is open to all students, regardless of their branch or year, who have a passion for learning about cloud technologies and AWS.",
   },
   {
     question: "Do I need prior cloud experience to join?",
@@ -27,24 +27,21 @@ const faqs = [
 export default function FAQ() {
   return (
     <div className="flex flex-col min-h-screen pt-16">
-      <section className="relative py-20 bg-[#0f1b29] text-center overflow-hidden">
-        <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="absolute right-0 top-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-[100px] opacity-10"></div>
-          <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#FF9900] rounded-full mix-blend-screen filter blur-[100px] opacity-10"></div>
-        </div>
-
+      <section className="relative py-20 text-center overflow-hidden">
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-            Technical <span className="text-[#FF9900]">Queries</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 font-medium">
-            Everything you need to know about joining and succeeding in the AWS
-            Community.
-          </p>
+          <div className="glass-panel p-10 rounded-3xl mx-auto inline-block border-t border-blue-500/20">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+              Technical <span className="text-[#FF9900]">Queries</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-300 font-medium max-w-2xl mx-auto">
+              Everything you need to know about joining and succeeding in the
+              AWS Community.
+            </p>
+          </div>
         </div>
       </section>
 
-      <SectionContainer className="bg-[#0b141e] flex-grow">
+      <SectionContainer className="relative z-10 flex-grow">
         <div className="max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
             <FAQAccordion
@@ -55,9 +52,12 @@ export default function FAQ() {
             />
           ))}
 
-          <div className="mt-12 text-center p-8 bg-[#162638] rounded-2xl border border-gray-800 shadow-xl">
-            <h3 className="text-2xl font-bold mb-3">Still have questions?</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="mt-12 text-center p-8 glass-panel rounded-2xl relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-[#FF9900]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <h3 className="text-2xl font-bold mb-3 relative z-10">
+              Still have questions?
+            </h3>
+            <p className="text-gray-400 mb-6 relative z-10">
               Can't find the answer you're looking for? Reach out to our team
               directly.
             </p>

@@ -1,3 +1,5 @@
+import React, { useRef, useState } from "react";
+
 export default function EventCard({ event }) {
   const {
     title,
@@ -11,10 +13,51 @@ export default function EventCard({ event }) {
     registrationLink,
   } = event;
 
+  const cardRef = useRef(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [transformStyle, setTransformStyle] = useState("");
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePosition({ x, y });
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Milder tilt for large horizontal event cards
+    const rotateX = ((y - centerY) / centerY) * -4;
+    const rotateY = ((x - centerX) / centerX) * 4;
+    setTransformStyle(
+      `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`,
+    );
+  };
+
+  const handleMouseEnter = () => {};
+  const handleMouseLeave = () => {
+    setTransformStyle(
+      "perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+    );
+  };
+
   return (
     <div
-      className={`flex flex-col md:flex-row bg-[#162638] rounded-2xl overflow-hidden border ${isUpcoming ? "border-[#FF9900]/50" : "border-gray-800"} hover:border-[#FF9900] transition-colors duration-300 shadow-xl relative`}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{ transform: transformStyle }}
+      className={`group flex flex-col md:flex-row glass-panel rounded-3xl overflow-hidden border ${isUpcoming ? "border-[#FF9900]/50" : "border-white/10"} hover:border-[#FF9900]/60 transition-all duration-200 ease-out shadow-2xl relative`}
     >
+      {/* Spotlight Effect */}
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-20 mix-blend-screen"
+        style={{
+          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 153, 0, 0.15), transparent 40%)`,
+        }}
+      />
+
       {isUpcoming && (
         <div className="absolute top-4 right-4 z-10 bg-[#FF9900] text-[#0f1b29] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
           Upcoming
@@ -37,7 +80,7 @@ export default function EventCard({ event }) {
             {tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="bg-[#0f1b29] text-[#FF9900] text-xs font-semibold px-2.5 py-1 rounded border border-gray-700"
+                className="bg-black/30 backdrop-blur-md text-[#FF9900] text-xs font-semibold px-2.5 py-1 rounded border border-white/10"
               >
                 {tag}
               </span>
@@ -92,7 +135,7 @@ export default function EventCard({ event }) {
           </div>
 
           <button
-            className={`shrink-0 font-bold py-2 px-6 rounded-full transition-colors duration-300 ${isUpcoming ? "bg-white text-[#0f1b29] hover:bg-gray-200" : "bg-[#0f1b29] text-white border border-gray-600 hover:border-gray-400"}`}
+            className={`shrink-0 font-bold py-2 px-6 rounded-full transition-colors duration-300 ${isUpcoming ? "bg-white text-[#0f1b29] hover:bg-gray-200" : "bg-black/40 backdrop-blur-md text-white border border-white/20 hover:border-white/40"}`}
             onClick={
               isUpcoming ? () => window.open(registrationLink, "_blank") : null
             }

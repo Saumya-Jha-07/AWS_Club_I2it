@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/awsi2it_logo (1).jpeg';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -13,40 +14,64 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#0f1b29] border-b border-gray-800 sticky top-0 z-50 shadow-md">
+    <nav className="glass-panel sticky top-0 z-50 border-b-white/5 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <NavLink to="/" className="flex-shrink-0 flex items-center">
-              <span className="text-xl font-bold text-white tracking-wider flex items-center gap-2">
-                <span className="text-[#FF9900]">AWS</span> Community
+        <div className="flex justify-between items-center py-4">
+          
+          {/* Left: Logo */}
+          <div className="flex items-center w-1/4">
+            <NavLink to="/" className="flex-shrink-0 flex items-center group gap-3">
+              <div className="w-10 h-10 rounded-full overflow-hidden border border-[#FF9900]/30 shadow-[0_0_10px_rgba(255,153,0,0.3)] transition-transform duration-300 group-hover:scale-110">
+                <img src={logo} alt="AWS I2IT Logo" className="w-full h-full object-cover" />
+              </div>
+              <span className="text-xl font-bold text-white tracking-wider flex items-center gap-2 transition-transform duration-300 group-hover:scale-105">
+                <span className="text-[#FF9900] drop-shadow-[0_0_8px_rgba(255,153,0,0.5)]">AWS</span> Cloud Club I2IT
               </span>
             </NavLink>
           </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-6">
+
+          {/* Center: Desktop Links */}
+          <div className="hidden md:flex justify-center w-2/4">
+            <div className="flex space-x-8">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
                   className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                    `relative px-1 py-2 text-sm font-medium transition-all duration-300 group ${
                       isActive
-                        ? 'text-[#FF9900] bg-[#162638]'
-                        : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        ? 'text-[#FF9900] drop-shadow-[0_0_8px_rgba(255,153,0,0.6)]'
+                        : 'text-gray-300 hover:text-white'
                     }`
                   }
                 >
-                  {link.name}
+                  {({ isActive }) => (
+                    <>
+                      {link.name}
+                      {/* Animated Underline */}
+                      <span
+                        className={`absolute -bottom-1 left-0 w-full h-[2px] bg-[#FF9900] rounded-full transition-all duration-300 ${
+                          isActive ? 'scale-x-100 opacity-100 shadow-[0_0_8px_rgba(255,153,0,0.8)]' : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-50'
+                        } origin-left`}
+                      ></span>
+                    </>
+                  )}
                 </NavLink>
               ))}
             </div>
           </div>
+
+          {/* Right: Empty space for balance or future CTA */}
+          <div className="hidden md:flex justify-end w-1/4">
+             {/* E.g., a "Join Us" button could go here later */}
+          </div>
+
+          {/* Mobile menu button */}
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white transition-colors duration-200"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none transition-colors duration-200"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
@@ -65,28 +90,27 @@ export default function Navbar() {
         </div>
       </div>
 
-      {isOpen && (
-        <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    isActive
-                      ? 'text-[#FF9900] bg-[#162638]'
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
-          </div>
+      {/* Mobile Menu Dropdown with glassmorphism */}
+      <div className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`} id="mobile-menu">
+        <div className="px-4 pt-2 pb-4 space-y-2 bg-[#0f1b29]/95 backdrop-blur-xl border-b border-gray-800 shadow-2xl">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
+                  isActive
+                    ? 'text-[#FF9900] bg-white/5 shadow-[inset_0_0_10px_rgba(255,153,0,0.1)]'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
         </div>
-      )}
+      </div>
     </nav>
   );
 }
