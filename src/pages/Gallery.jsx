@@ -1,4 +1,5 @@
 import SectionContainer from "../components/SectionContainer";
+import Card from "../components/Card.jsx";
 
 export default function Gallery() {
   return (
