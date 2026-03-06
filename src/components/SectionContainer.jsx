@@ -5,28 +5,24 @@ export default function SectionContainer({ children, className = '', id = '' }) 
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    const node = sectionRef.current;
     const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
+      ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
           observer.unobserve(entry.target);
         }
       },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1, // Trigger when 10% of the section is visible
-      }
+      { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (node) {
+      observer.observe(node);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (node) {
+        observer.unobserve(node);
       }
     };
   }, []);
